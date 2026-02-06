@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Sensei - Team Collaboration Tools Comparison</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #242424;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --green: #22c55e;
+            --yellow: #eab308;
+            --red: #ef4444;
+            --border: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        /* Comparison Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        .card.recommended {
+            border-color: var(--green);
+            position: relative;
+        }
+
+        .card.recommended::before {
+            content: "Recommended";
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--green);
+            color: var(--bg-primary);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .card-icon.slack { background: #4A154B; }
+        .card-icon.discord { background: #5865F2; }
+        .card-icon.claude { background: linear-gradient(135deg, #d97706, #ea580c); }
+        .card-icon.cli { background: #333; }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .card-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .card-features li {
+            padding: 0.4rem 0;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .check { color: var(--green); }
+        .cross { color: var(--red); }
+        .partial { color: var(--yellow); }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+        }
+
+        .meta-item {
+            text-align: center;
+        }
+
+        .meta-label {
+            color: var(--text-secondary);
+            display: block;
+        }
+
+        .meta-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Comparison Table */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--text-primary);
+            position: sticky;
+            top: 0;
+        }
+
+        th:first-child {
+            border-top-left-radius: 12px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 12px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: var(--bg-secondary);
+        }
+
+        td:first-child {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .badge-green { background: rgba(34, 197, 94, 0.2); color: var(--green); }
+        .badge-yellow { background: rgba(234, 179, 8, 0.2); color: var(--yellow); }
+        .badge-red { background: rgba(239, 68, 68, 0.2); color: var(--red); }
+        .badge-blue { background: rgba(99, 102, 241, 0.2); color: var(--accent); }
+
+        /* Recommendation Section */
+        .recommendation {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .recommendation h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .recommendation p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .recommendation ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .recommendation li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .recommendation li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 2rem 0;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            th, td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">AI Sensei</div>
+            <p class="subtitle">Team Collaboration Tools Comparison</p>
+        </header>
+
+        <section class="section">
+            <h2>Options Overview</h2>
+            <div class="cards-grid">
+
+                <div class="card recommended">
+                    <div class="card-header">
+                        <div class="card-icon claude">🧠</div>
+                        <div>
+                            <div class="card-title">Claude.ai Projects</div>
+                            <div class="card-subtitle">Shared Knowledge Base</div>
+                        </div>
+                    </div>
+                    <p class="card-description">
+                        Web-based projects with persistent knowledge files. Both team members access the same context - market data, brand voice, strategy docs.
+                    </p>
+                    <ul class="card-features">
+                        <li><span class="check">✓</span> Persistent project knowledge (like CLAUDE.md)</li>
+                        <li><span class="check">✓</span> Zero infrastructure to maintain</li>
+                        <li><span class="check">✓</span> Upload files, docs, context</li>
+                        <li><span class="check">✓</span> Shared between team members</li>
+                        <li><span class="partial">◐</span> Not real-time collaborative</li>
+                        <li><span class="cross">✗</span> Web only, no chat app integration</li>
+                    </ul>
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Setup</span>
+                            <span class="meta-value">5 min</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Cost</span>
+                            <span class="meta-value">$20-25/user/mo</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Maintenance</span>
+                            <span class="meta-value">None</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon slack">💬</div>
+                        <div>
+                            <div class="card-title">Claude for Slack</div>
+                            <div class="card-subtitle">Official Anthropic Integration</div>
+                        </div>
+                    </div>
+                    <p class="card-description">
+                        Official integration. @Claude in channels, auto-routes coding tasks to Claude Code web sessions. GitHub PR creation built-in.
+                    </p>
+                    <ul class="card-features">
+                        <li><span class="check">✓</span> Official, maintained by Anthropic</li>
+                        <li><span class="check">✓</span> Thread context awareness</li>
+                        <li><span class="check">✓</span> Claude Code routing (for code tasks)</li>
+                        <li><span class="check">✓</span> GitHub integration, auto-PR</li>
+                        <li><span class="cross">✗</span> No persistent memory for non-code</li>
+                        <li><span class="cross">✗</span> No CLAUDE.md equivalent for chat</li>
+                    </ul>
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Setup</span>
+                            <span class="meta-value">15 min</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Cost</span>
+                            <span class="meta-value">$20+/user + Slack</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Maintenance</span>
+                            <span class="meta-value">None</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon discord">🎮</div>
+                        <div>
+                            <div class="card-title">Discord Bot</div>
+                            <div class="card-subtitle">Self-Hosted (OpenClaw/Custom)</div>
+                        </div>
+                    </div>
+                    <p class="card-description">
+                        No official integration. Requires self-hosting OpenClaw or building custom bot. Full control but you maintain everything.
+                    </p>
+                    <ul class="card-features">
+                        <li><span class="check">✓</span> Full customization possible</li>
+                        <li><span class="check">✓</span> Can add persistent memory</li>
+                        <li><span class="check">✓</span> Works in Discord (if team prefers)</li>
+                        <li><span class="cross">✗</span> Self-hosted, you maintain server</li>
+                        <li><span class="cross">✗</span> No GitHub/PR integration</li>
+                        <li><span class="cross">✗</span> API costs unpredictable</li>
+                    </ul>
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Setup</span>
+                            <span class="meta-value">2-4 hours</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Cost</span>
+                            <span class="meta-value">API + VPS (~$50/mo)</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Maintenance</span>
+                            <span class="meta-value">Ongoing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon cli">⌨️</div>
+                        <div>
+                            <div class="card-title">Claude Code CLI</div>
+                            <div class="card-subtitle">Local Development Tool</div>
+                        </div>
+                    </div>
+                    <p class="card-description">
+                        Terminal-based, runs locally. Full CLAUDE.md support, file access, powerful for solo dev work. Not collaborative.
+                    </p>
+                    <ul class="card-features">
+                        <li><span class="check">✓</span> Full CLAUDE.md + memory system</li>
+                        <li><span class="check">✓</span> Direct file system access</li>
+                        <li><span class="check">✓</span> Most powerful for coding</li>
+                        <li><span class="check">✓</span> MCP tools, extensions</li>
+                        <li><span class="cross">✗</span> Single user only</li>
+                        <li><span class="cross">✗</span> Not collaborative</li>
+                    </ul>
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Setup</span>
+                            <span class="meta-value">10 min</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Cost</span>
+                            <span class="meta-value">$20/mo or API</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Maintenance</span>
+                            <span class="meta-value">Updates only</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Feature Comparison</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Claude.ai Projects</th>
+                            <th>Slack</th>
+                            <th>Discord</th>
+                            <th>CLI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Persistent Knowledge</td>
+                            <td><span class="badge badge-green">Yes - Project files</span></td>
+                            <td><span class="badge badge-yellow">Code only (GitHub)</span></td>
+                            <td><span class="badge badge-yellow">If you build it</span></td>
+                            <td><span class="badge badge-green">Yes - CLAUDE.md</span></td>
+                        </tr>
+                        <tr>
+                            <td>Team Collaboration</td>
+                            <td><span class="badge badge-green">Shared projects</span></td>
+                            <td><span class="badge badge-green">Channels + threads</span></td>
+                            <td><span class="badge badge-green">Channels</span></td>
+                            <td><span class="badge badge-red">Single user</span></td>
+                        </tr>
+                        <tr>
+                            <td>Real-time Chat</td>
+                            <td><span class="badge badge-red">No</span></td>
+                            <td><span class="badge badge-green">Yes</span></td>
+                            <td><span class="badge badge-green">Yes</span></td>
+                            <td><span class="badge badge-red">No</span></td>
+                        </tr>
+                        <tr>
+                            <td>GitHub Integration</td>
+                            <td><span class="badge badge-red">No</span></td>
+                            <td><span class="badge badge-green">Auto PR creation</span></td>
+                            <td><span class="badge badge-red">No</span></td>
+                            <td><span class="badge badge-green">Full git access</span></td>
+                        </tr>
+                        <tr>
+                            <td>File Upload</td>
+                            <td><span class="badge badge-green">Yes</span></td>
+                            <td><span class="badge badge-yellow">Limited</span></td>
+                            <td><span class="badge badge-yellow">Depends on bot</span></td>
+                            <td><span class="badge badge-green">Full filesystem</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Access</td>
+                            <td><span class="badge badge-green">Web app</span></td>
+                            <td><span class="badge badge-green">Slack app</span></td>
+                            <td><span class="badge badge-green">Discord app</span></td>
+                            <td><span class="badge badge-red">Terminal only</span></td>
+                        </tr>
+                        <tr>
+                            <td>Setup Complexity</td>
+                            <td><span class="badge badge-green">Easy</span></td>
+                            <td><span class="badge badge-green">Easy</span></td>
+                            <td><span class="badge badge-red">Complex</span></td>
+                            <td><span class="badge badge-yellow">Medium</span></td>
+                        </tr>
+                        <tr>
+                            <td>Maintenance</td>
+                            <td><span class="badge badge-green">None</span></td>
+                            <td><span class="badge badge-green">None</span></td>
+                            <td><span class="badge badge-red">Ongoing</span></td>
+                            <td><span class="badge badge-green">Updates only</span></td>
+                        </tr>
+                        <tr>
+                            <td>Official Support</td>
+                            <td><span class="badge badge-green">Anthropic</span></td>
+                            <td><span class="badge badge-green">Anthropic</span></td>
+                            <td><span class="badge badge-red">Community</span></td>
+                            <td><span class="badge badge-green">Anthropic</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>For AI Sensei Specifically</h2>
+            <div class="recommendation">
+                <h3>Our Recommendation: Claude.ai Projects</h3>
+                <p>
+                    For a small team (2-3 people) focused on <strong>marketing content and strategy</strong> rather than heavy code development, Claude.ai Projects offers the best balance:
+                </p>
+                <ul>
+                    <li><strong>Persistent context</strong> - Upload market report, brand guidelines, Korean copy examples. Claude remembers everything.</li>
+                    <li><strong>Zero infrastructure</strong> - No servers to maintain, no bots to babysit.</li>
+                    <li><strong>Shared knowledge</strong> - Everyone accesses the same project with the same context.</li>
+                    <li><strong>Cost effective</strong> - $40-50/month total for the team.</li>
+                </ul>
+                <p style="margin-top: 1.5rem;">
+                    <strong>When to add Slack:</strong> If you need real-time chat integration or start doing more code work with GitHub PRs, add Claude for Slack as a complement.
+                </p>
+                <p>
+                    <strong>Skip Discord:</strong> Unless the team strongly prefers Discord, the self-hosting burden isn't worth it for a small team.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Quick Start: Claude.ai Project Setup</h2>
+            <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">1️⃣</div>
+                    <p style="font-size: 0.9rem;">Go to <a href="https://claude.ai" style="color: var(--accent);">claude.ai</a> and sign up for Pro ($20/mo)</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">2️⃣</div>
+                    <p style="font-size: 0.9rem;">Create a new Project called "AI Sensei Marketing"</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">3️⃣</div>
+                    <p style="font-size: 0.9rem;">Add project knowledge: market report, brand voice, strategy docs</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">4️⃣</div>
+                    <p style="font-size: 0.9rem;">Write custom instructions (like CLAUDE.md)</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">5️⃣</div>
+                    <p style="font-size: 0.9rem;">Share project access with team members</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Created for AI Sensei team - February 2026</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="https://eyeseeem.github.io/ai-sensei-market-report/">View Market Report</a> ·
+                <a href="https://ai-sensei.com">AI Sensei</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
