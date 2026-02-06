@@ -19,6 +19,7 @@
             --green: #22c55e;
             --yellow: #eab308;
             --red: #ef4444;
+            --orange: #f97316;
             --border: #333;
         }
 
@@ -37,7 +38,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -74,127 +75,12 @@
             margin-bottom: 4rem;
         }
 
-        /* Comparison Cards */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid var(--border);
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent);
-        }
-
-        .card.recommended {
-            border-color: var(--green);
-            position: relative;
-        }
-
-        .card.recommended::before {
-            content: "Recommended";
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            background: var(--green);
-            color: var(--bg-primary);
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-
-        .card-icon.slack { background: #4A154B; }
-        .card-icon.discord { background: #5865F2; }
-        .card-icon.claude { background: linear-gradient(135deg, #d97706, #ea580c); }
-        .card-icon.cli { background: #333; }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .card-subtitle {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .card-description {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .card-features {
-            list-style: none;
-            margin-bottom: 1rem;
-        }
-
-        .card-features li {
-            padding: 0.4rem 0;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .check { color: var(--green); }
-        .cross { color: var(--red); }
-        .partial { color: var(--yellow); }
-
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border);
-            font-size: 0.8rem;
-        }
-
-        .meta-item {
-            text-align: center;
-        }
-
-        .meta-label {
-            color: var(--text-secondary);
-            display: block;
-        }
-
-        .meta-value {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        /* Comparison Table */
+        /* Main Comparison Table */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 12px;
             border: 1px solid var(--border);
+            background: var(--bg-card);
         }
 
         table {
@@ -204,9 +90,10 @@
         }
 
         th, td {
-            padding: 1rem;
-            text-align: left;
+            padding: 1rem 1.25rem;
+            text-align: center;
             border-bottom: 1px solid var(--border);
+            vertical-align: middle;
         }
 
         th {
@@ -217,75 +104,193 @@
             top: 0;
         }
 
-        th:first-child {
-            border-top-left-radius: 12px;
+        th:first-child,
+        td:first-child {
+            text-align: left;
+            font-weight: 500;
+            background: var(--bg-secondary);
+            position: sticky;
+            left: 0;
+            z-index: 1;
+            min-width: 180px;
         }
 
-        th:last-child {
-            border-top-right-radius: 12px;
+        th:first-child {
+            z-index: 2;
         }
 
         tr:last-child td {
             border-bottom: none;
         }
 
-        tr:hover {
+        tr:hover td {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        tr:hover td:first-child {
             background: var(--bg-secondary);
         }
 
-        td:first-child {
-            color: var(--text-secondary);
-            font-weight: 500;
+        /* Column Headers */
+        .col-header {
+            min-width: 160px;
         }
 
-        .badge {
+        .col-header .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .col-header .name {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .col-header .type {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .col-recommended {
+            background: rgba(34, 197, 94, 0.1) !important;
+            border-left: 2px solid var(--green);
+            border-right: 2px solid var(--green);
+        }
+
+        .col-recommended-header {
+            background: rgba(34, 197, 94, 0.15) !important;
+            border-left: 2px solid var(--green);
+            border-right: 2px solid var(--green);
+            border-top: 2px solid var(--green);
+        }
+
+        tr:last-child .col-recommended {
+            border-bottom: 2px solid var(--green);
+        }
+
+        .recommended-badge {
             display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
+            background: var(--green);
+            color: var(--bg-primary);
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-top: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Cell Values */
+        .yes {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .no {
+            color: var(--red);
+        }
+
+        .partial {
+            color: var(--yellow);
+        }
+
+        .neutral {
+            color: var(--text-secondary);
+        }
+
+        .highlight {
+            color: var(--accent);
             font-weight: 500;
         }
 
-        .badge-green { background: rgba(34, 197, 94, 0.2); color: var(--green); }
-        .badge-yellow { background: rgba(234, 179, 8, 0.2); color: var(--yellow); }
-        .badge-red { background: rgba(239, 68, 68, 0.2); color: var(--red); }
-        .badge-blue { background: rgba(99, 102, 241, 0.2); color: var(--accent); }
-
-        /* Recommendation Section */
-        .recommendation {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
-            border: 1px solid var(--accent);
-            border-radius: 12px;
-            padding: 2rem;
+        .cost {
+            font-weight: 600;
         }
 
-        .recommendation h3 {
-            color: var(--accent);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
+        .cost-low { color: var(--green); }
+        .cost-med { color: var(--yellow); }
+        .cost-high { color: var(--orange); }
 
-        .recommendation p {
+        .small {
+            font-size: 0.75rem;
             color: var(--text-secondary);
-            margin-bottom: 1rem;
+            display: block;
+            margin-top: 2px;
         }
 
-        .recommendation ul {
-            list-style: none;
-            margin-left: 0;
-        }
-
-        .recommendation li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .recommendation li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
+        /* Section Rows */
+        .section-row td {
+            background: var(--bg-primary) !important;
             color: var(--accent);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.75rem 1.25rem;
+        }
+
+        .section-row td:first-child {
+            background: var(--bg-primary) !important;
+        }
+
+        /* Summary Section */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .summary-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .summary-card.recommended {
+            border-color: var(--green);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .summary-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .summary-card h3 .icon {
+            font-size: 1.25rem;
+        }
+
+        .summary-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .summary-card strong {
+            color: var(--text-primary);
+        }
+
+        .best-for {
+            background: var(--bg-secondary);
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .best-for-label {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
         }
 
         /* Footer */
@@ -321,13 +326,22 @@
                 font-size: 1.8rem;
             }
 
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
             th, td {
                 padding: 0.75rem 0.5rem;
                 font-size: 0.8rem;
+            }
+
+            th:first-child,
+            td:first-child {
+                min-width: 120px;
+            }
+
+            .col-header {
+                min-width: 100px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -340,228 +354,232 @@
         </header>
 
         <section class="section">
-            <h2>Options Overview</h2>
-            <div class="cards-grid">
-
-                <div class="card recommended">
-                    <div class="card-header">
-                        <div class="card-icon claude">🧠</div>
-                        <div>
-                            <div class="card-title">Claude.ai Projects</div>
-                            <div class="card-subtitle">Shared Knowledge Base</div>
-                        </div>
-                    </div>
-                    <p class="card-description">
-                        Web-based projects with persistent knowledge files. Both team members access the same context - market data, brand voice, strategy docs.
-                    </p>
-                    <ul class="card-features">
-                        <li><span class="check">✓</span> Persistent project knowledge (like CLAUDE.md)</li>
-                        <li><span class="check">✓</span> Zero infrastructure to maintain</li>
-                        <li><span class="check">✓</span> Upload files, docs, context</li>
-                        <li><span class="check">✓</span> Shared between team members</li>
-                        <li><span class="partial">◐</span> Not real-time collaborative</li>
-                        <li><span class="cross">✗</span> Web only, no chat app integration</li>
-                    </ul>
-                    <div class="card-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Setup</span>
-                            <span class="meta-value">5 min</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Cost</span>
-                            <span class="meta-value">$20-25/user/mo</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Maintenance</span>
-                            <span class="meta-value">None</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon slack">💬</div>
-                        <div>
-                            <div class="card-title">Claude for Slack</div>
-                            <div class="card-subtitle">Official Anthropic Integration</div>
-                        </div>
-                    </div>
-                    <p class="card-description">
-                        Official integration. @Claude in channels, auto-routes coding tasks to Claude Code web sessions. GitHub PR creation built-in.
-                    </p>
-                    <ul class="card-features">
-                        <li><span class="check">✓</span> Official, maintained by Anthropic</li>
-                        <li><span class="check">✓</span> Thread context awareness</li>
-                        <li><span class="check">✓</span> Claude Code routing (for code tasks)</li>
-                        <li><span class="check">✓</span> GitHub integration, auto-PR</li>
-                        <li><span class="cross">✗</span> No persistent memory for non-code</li>
-                        <li><span class="cross">✗</span> No CLAUDE.md equivalent for chat</li>
-                    </ul>
-                    <div class="card-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Setup</span>
-                            <span class="meta-value">15 min</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Cost</span>
-                            <span class="meta-value">$20+/user + Slack</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Maintenance</span>
-                            <span class="meta-value">None</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon discord">🎮</div>
-                        <div>
-                            <div class="card-title">Discord Bot</div>
-                            <div class="card-subtitle">Self-Hosted (OpenClaw/Custom)</div>
-                        </div>
-                    </div>
-                    <p class="card-description">
-                        No official integration. Requires self-hosting OpenClaw or building custom bot. Full control but you maintain everything.
-                    </p>
-                    <ul class="card-features">
-                        <li><span class="check">✓</span> Full customization possible</li>
-                        <li><span class="check">✓</span> Can add persistent memory</li>
-                        <li><span class="check">✓</span> Works in Discord (if team prefers)</li>
-                        <li><span class="cross">✗</span> Self-hosted, you maintain server</li>
-                        <li><span class="cross">✗</span> No GitHub/PR integration</li>
-                        <li><span class="cross">✗</span> API costs unpredictable</li>
-                    </ul>
-                    <div class="card-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Setup</span>
-                            <span class="meta-value">2-4 hours</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Cost</span>
-                            <span class="meta-value">API + VPS (~$50/mo)</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Maintenance</span>
-                            <span class="meta-value">Ongoing</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon cli">⌨️</div>
-                        <div>
-                            <div class="card-title">Claude Code CLI</div>
-                            <div class="card-subtitle">Local Development Tool</div>
-                        </div>
-                    </div>
-                    <p class="card-description">
-                        Terminal-based, runs locally. Full CLAUDE.md support, file access, powerful for solo dev work. Not collaborative.
-                    </p>
-                    <ul class="card-features">
-                        <li><span class="check">✓</span> Full CLAUDE.md + memory system</li>
-                        <li><span class="check">✓</span> Direct file system access</li>
-                        <li><span class="check">✓</span> Most powerful for coding</li>
-                        <li><span class="check">✓</span> MCP tools, extensions</li>
-                        <li><span class="cross">✗</span> Single user only</li>
-                        <li><span class="cross">✗</span> Not collaborative</li>
-                    </ul>
-                    <div class="card-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Setup</span>
-                            <span class="meta-value">10 min</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Cost</span>
-                            <span class="meta-value">$20/mo or API</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Maintenance</span>
-                            <span class="meta-value">Updates only</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="section">
-            <h2>Feature Comparison</h2>
+            <h2>Full Comparison</h2>
             <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
-                            <th>Feature</th>
-                            <th>Claude.ai Projects</th>
-                            <th>Slack</th>
-                            <th>Discord</th>
-                            <th>CLI</th>
+                            <th></th>
+                            <th class="col-header col-recommended-header">
+                                <div class="icon">🤖</div>
+                                <div class="name">OpenClaw VPS</div>
+                                <div class="type">Self-hosted Bot</div>
+                                <div class="recommended-badge">Recommended</div>
+                            </th>
+                            <th class="col-header">
+                                <div class="icon">🧠</div>
+                                <div class="name">Claude.ai Projects</div>
+                                <div class="type">Web Platform</div>
+                            </th>
+                            <th class="col-header">
+                                <div class="icon">💬</div>
+                                <div class="name">Claude for Slack</div>
+                                <div class="type">Official Integration</div>
+                            </th>
+                            <th class="col-header">
+                                <div class="icon">⌨️</div>
+                                <div class="name">Claude Code CLI</div>
+                                <div class="type">Local Terminal</div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Persistent Knowledge</td>
-                            <td><span class="badge badge-green">Yes - Project files</span></td>
-                            <td><span class="badge badge-yellow">Code only (GitHub)</span></td>
-                            <td><span class="badge badge-yellow">If you build it</span></td>
-                            <td><span class="badge badge-green">Yes - CLAUDE.md</span></td>
+                        <!-- ACCESS -->
+                        <tr class="section-row">
+                            <td colspan="5">Access & Communication</td>
                         </tr>
                         <tr>
-                            <td>Team Collaboration</td>
-                            <td><span class="badge badge-green">Shared projects</span></td>
-                            <td><span class="badge badge-green">Channels + threads</span></td>
-                            <td><span class="badge badge-green">Channels</span></td>
-                            <td><span class="badge badge-red">Single user</span></td>
+                            <td>Telegram</td>
+                            <td class="col-recommended"><span class="yes">✓ Yes</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="no">✗ No</span></td>
                         </tr>
                         <tr>
-                            <td>Real-time Chat</td>
-                            <td><span class="badge badge-red">No</span></td>
-                            <td><span class="badge badge-green">Yes</span></td>
-                            <td><span class="badge badge-green">Yes</span></td>
-                            <td><span class="badge badge-red">No</span></td>
+                            <td>Email Access</td>
+                            <td class="col-recommended"><span class="yes">✓ Own email address</span><span class="small">e.g. sensei@aisensei.com</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="no">✗ No</span></td>
                         </tr>
                         <tr>
-                            <td>GitHub Integration</td>
-                            <td><span class="badge badge-red">No</span></td>
-                            <td><span class="badge badge-green">Auto PR creation</span></td>
-                            <td><span class="badge badge-red">No</span></td>
-                            <td><span class="badge badge-green">Full git access</span></td>
+                            <td>Discord</td>
+                            <td class="col-recommended"><span class="yes">✓ Yes</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="no">✗ No</span></td>
                         </tr>
                         <tr>
-                            <td>File Upload</td>
-                            <td><span class="badge badge-green">Yes</span></td>
-                            <td><span class="badge badge-yellow">Limited</span></td>
-                            <td><span class="badge badge-yellow">Depends on bot</span></td>
-                            <td><span class="badge badge-green">Full filesystem</span></td>
+                            <td>Slack</td>
+                            <td class="col-recommended"><span class="yes">✓ Yes</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="yes">✓ Yes</span></td>
+                            <td><span class="no">✗ No</span></td>
+                        </tr>
+                        <tr>
+                            <td>WhatsApp</td>
+                            <td class="col-recommended"><span class="yes">✓ Yes</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="no">✗ No</span></td>
+                        </tr>
+                        <tr>
+                            <td>Web Interface</td>
+                            <td class="col-recommended"><span class="partial">◐ Optional</span><span class="small">Can add Kanban etc.</span></td>
+                            <td><span class="yes">✓ Yes</span></td>
+                            <td><span class="partial">◐ Via Slack web</span></td>
+                            <td><span class="no">✗ Terminal only</span></td>
                         </tr>
                         <tr>
                             <td>Mobile Access</td>
-                            <td><span class="badge badge-green">Web app</span></td>
-                            <td><span class="badge badge-green">Slack app</span></td>
-                            <td><span class="badge badge-green">Discord app</span></td>
-                            <td><span class="badge badge-red">Terminal only</span></td>
+                            <td class="col-recommended"><span class="yes">✓ Any chat app</span></td>
+                            <td><span class="yes">✓ Web browser</span></td>
+                            <td><span class="yes">✓ Slack app</span></td>
+                            <td><span class="no">✗ No</span></td>
+                        </tr>
+
+                        <!-- COLLABORATION -->
+                        <tr class="section-row">
+                            <td colspan="5">Team Collaboration</td>
                         </tr>
                         <tr>
-                            <td>Setup Complexity</td>
-                            <td><span class="badge badge-green">Easy</span></td>
-                            <td><span class="badge badge-green">Easy</span></td>
-                            <td><span class="badge badge-red">Complex</span></td>
-                            <td><span class="badge badge-yellow">Medium</span></td>
+                            <td>Multiple Users</td>
+                            <td class="col-recommended"><span class="yes">✓ Unlimited</span><span class="small">Anyone can message</span></td>
+                            <td><span class="yes">✓ Team plan</span><span class="small">Per-seat cost</span></td>
+                            <td><span class="yes">✓ Channel-based</span></td>
+                            <td><span class="no">✗ Single user</span></td>
                         </tr>
                         <tr>
-                            <td>Maintenance</td>
-                            <td><span class="badge badge-green">None</span></td>
-                            <td><span class="badge badge-green">None</span></td>
-                            <td><span class="badge badge-red">Ongoing</span></td>
-                            <td><span class="badge badge-green">Updates only</span></td>
+                            <td>Shared Context</td>
+                            <td class="col-recommended"><span class="yes">✓ Same bot for all</span><span class="small">Shared memory</span></td>
+                            <td><span class="yes">✓ Shared project files</span></td>
+                            <td><span class="partial">◐ Thread context only</span></td>
+                            <td><span class="no">✗ Local only</span></td>
+                        </tr>
+                        <tr>
+                            <td>See Each Other's Chats</td>
+                            <td class="col-recommended"><span class="yes">✓ Group chats</span></td>
+                            <td><span class="no">✗ Separate convos</span></td>
+                            <td><span class="yes">✓ In channels</span></td>
+                            <td><span class="no">✗ No</span></td>
+                        </tr>
+                        <tr>
+                            <td>Async Communication</td>
+                            <td class="col-recommended"><span class="yes">✓ Message anytime</span></td>
+                            <td><span class="yes">✓ Yes</span></td>
+                            <td><span class="yes">✓ Yes</span></td>
+                            <td><span class="no">✗ Interactive only</span></td>
+                        </tr>
+
+                        <!-- MEMORY & CONTEXT -->
+                        <tr class="section-row">
+                            <td colspan="5">Memory & Context</td>
+                        </tr>
+                        <tr>
+                            <td>Persistent Instructions</td>
+                            <td class="col-recommended"><span class="yes">✓ System prompt</span><span class="small">Like CLAUDE.md</span></td>
+                            <td><span class="yes">✓ Project instructions</span></td>
+                            <td><span class="partial">◐ GitHub CLAUDE.md</span><span class="small">Code tasks only</span></td>
+                            <td><span class="yes">✓ CLAUDE.md</span></td>
+                        </tr>
+                        <tr>
+                            <td>Knowledge Base</td>
+                            <td class="col-recommended"><span class="yes">✓ Configurable</span><span class="small">Docs, reports, brand voice</span></td>
+                            <td><span class="yes">✓ Upload files</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="yes">✓ Local files</span></td>
+                        </tr>
+                        <tr>
+                            <td>Conversation History</td>
+                            <td class="col-recommended"><span class="yes">✓ Full history</span></td>
+                            <td><span class="yes">✓ Per project</span></td>
+                            <td><span class="partial">◐ Slack history</span><span class="small">90-day limit free tier</span></td>
+                            <td><span class="partial">◐ Session only</span></td>
+                        </tr>
+
+                        <!-- CAPABILITIES -->
+                        <tr class="section-row">
+                            <td colspan="5">Capabilities</td>
+                        </tr>
+                        <tr>
+                            <td>GitHub Integration</td>
+                            <td class="col-recommended"><span class="partial">◐ If configured</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="yes">✓ Auto PR creation</span></td>
+                            <td><span class="yes">✓ Full git access</span></td>
+                        </tr>
+                        <tr>
+                            <td>File Generation</td>
+                            <td class="col-recommended"><span class="yes">✓ Yes</span><span class="small">Send back via chat</span></td>
+                            <td><span class="partial">◐ Copy/paste</span></td>
+                            <td><span class="yes">✓ Via Claude Code</span></td>
+                            <td><span class="yes">✓ Direct write</span></td>
+                        </tr>
+                        <tr>
+                            <td>Web Browsing</td>
+                            <td class="col-recommended"><span class="yes">✓ If configured</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="yes">✓ WebFetch tool</span></td>
+                        </tr>
+                        <tr>
+                            <td>Custom Tools/MCP</td>
+                            <td class="col-recommended"><span class="yes">✓ Full MCP support</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="no">✗ No</span></td>
+                            <td><span class="yes">✓ Full MCP support</span></td>
+                        </tr>
+
+                        <!-- SETUP & MAINTENANCE -->
+                        <tr class="section-row">
+                            <td colspan="5">Setup & Maintenance</td>
+                        </tr>
+                        <tr>
+                            <td>Initial Setup</td>
+                            <td class="col-recommended"><span class="partial">2-4 hours</span></td>
+                            <td><span class="yes">5 minutes</span></td>
+                            <td><span class="yes">15 minutes</span></td>
+                            <td><span class="partial">10-30 minutes</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ongoing Maintenance</td>
+                            <td class="col-recommended"><span class="partial">Some required</span><span class="small">Updates, monitoring</span></td>
+                            <td><span class="yes">None</span></td>
+                            <td><span class="yes">None</span></td>
+                            <td><span class="yes">Updates only</span></td>
                         </tr>
                         <tr>
                             <td>Official Support</td>
-                            <td><span class="badge badge-green">Anthropic</span></td>
-                            <td><span class="badge badge-green">Anthropic</span></td>
-                            <td><span class="badge badge-red">Community</span></td>
-                            <td><span class="badge badge-green">Anthropic</span></td>
+                            <td class="col-recommended"><span class="no">Community</span></td>
+                            <td><span class="yes">Anthropic</span></td>
+                            <td><span class="yes">Anthropic</span></td>
+                            <td><span class="yes">Anthropic</span></td>
+                        </tr>
+
+                        <!-- COSTS -->
+                        <tr class="section-row">
+                            <td colspan="5">Costs</td>
+                        </tr>
+                        <tr>
+                            <td>Monthly Cost</td>
+                            <td class="col-recommended"><span class="cost cost-med">~$50-80/mo</span><span class="small">VPS + API usage</span></td>
+                            <td><span class="cost cost-med">$20-25/user/mo</span><span class="small">Claude Pro/Team</span></td>
+                            <td><span class="cost cost-med">$20+/user + Slack</span></td>
+                            <td><span class="cost cost-low">$20/mo or API</span></td>
+                        </tr>
+                        <tr>
+                            <td>Cost Scales With</td>
+                            <td class="col-recommended"><span class="neutral">API usage only</span><span class="small">Not per-user</span></td>
+                            <td><span class="neutral">Number of users</span></td>
+                            <td><span class="neutral">Number of users</span></td>
+                            <td><span class="neutral">Single user</span></td>
+                        </tr>
+                        <tr>
+                            <td>Infrastructure</td>
+                            <td class="col-recommended"><span class="cost cost-med">~$30-50/mo VPS</span><span class="small">e.g. Hetzner CCX23</span></td>
+                            <td><span class="cost cost-low">$0</span></td>
+                            <td><span class="cost cost-low">$0</span></td>
+                            <td><span class="cost cost-low">$0</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -569,50 +587,114 @@
         </section>
 
         <section class="section">
-            <h2>For AI Sensei Specifically</h2>
-            <div class="recommendation">
-                <h3>Our Recommendation: Claude.ai Projects</h3>
-                <p>
-                    For a small team (2-3 people) focused on <strong>marketing content and strategy</strong> rather than heavy code development, Claude.ai Projects offers the best balance:
-                </p>
-                <ul>
-                    <li><strong>Persistent context</strong> - Upload market report, brand guidelines, Korean copy examples. Claude remembers everything.</li>
-                    <li><strong>Zero infrastructure</strong> - No servers to maintain, no bots to babysit.</li>
-                    <li><strong>Shared knowledge</strong> - Everyone accesses the same project with the same context.</li>
-                    <li><strong>Cost effective</strong> - $40-50/month total for the team.</li>
-                </ul>
-                <p style="margin-top: 1.5rem;">
-                    <strong>When to add Slack:</strong> If you need real-time chat integration or start doing more code work with GitHub PRs, add Claude for Slack as a complement.
-                </p>
-                <p>
-                    <strong>Skip Discord:</strong> Unless the team strongly prefers Discord, the self-hosting burden isn't worth it for a small team.
-                </p>
+            <h2>Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-card recommended">
+                    <h3><span class="icon">🤖</span> OpenClaw on VPS</h3>
+                    <p>
+                        Self-hosted bot on a dedicated server. Accessible via <strong>Telegram, Discord, WhatsApp, Slack, and Email</strong>.
+                        Can have its own email address (e.g., sensei@aisensei.com) so anyone can just write to it.
+                    </p>
+                    <p>
+                        <strong>Shared context</strong> - everyone talks to the same bot with the same knowledge base.
+                        Full customization possible: system prompts, MCP tools, web access.
+                    </p>
+                    <div class="best-for">
+                        <div class="best-for-label">Best for</div>
+                        Team collaboration where everyone needs access via their preferred chat app. Marketing content, strategy discussions, shared AI assistant.
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <h3><span class="icon">🧠</span> Claude.ai Projects</h3>
+                    <p>
+                        Web-based projects with persistent knowledge files. Upload documents, set custom instructions.
+                        <strong>Zero infrastructure</strong> to maintain.
+                    </p>
+                    <p>
+                        Limitation: Each person has separate conversations. Can't see each other's chats in real-time. Web-only access.
+                    </p>
+                    <div class="best-for">
+                        <div class="best-for-label">Best for</div>
+                        Individual work with shared reference materials. Good fallback if VPS maintenance becomes too much.
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <h3><span class="icon">💬</span> Claude for Slack</h3>
+                    <p>
+                        Official Anthropic integration. @mention in channels. <strong>Auto-routes coding tasks</strong> to Claude Code web sessions with GitHub PR creation.
+                    </p>
+                    <p>
+                        Limitation: No persistent memory for non-code work. Each thread starts fresh. Requires Slack workspace.
+                    </p>
+                    <div class="best-for">
+                        <div class="best-for-label">Best for</div>
+                        Teams already on Slack who need code collaboration with GitHub. Less useful for marketing/content work.
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <h3><span class="icon">⌨️</span> Claude Code CLI</h3>
+                    <p>
+                        Most powerful option for <strong>individual development work</strong>. Full CLAUDE.md support, file system access, MCP tools.
+                    </p>
+                    <p>
+                        Limitation: Single user only. Not collaborative. Terminal-based.
+                    </p>
+                    <div class="best-for">
+                        <div class="best-for-label">Best for</div>
+                        Individual coding work. Max's personal use. Not for team collaboration.
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="section">
-            <h2>Quick Start: Claude.ai Project Setup</h2>
-            <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-                <div class="card" style="text-align: center;">
-                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">1️⃣</div>
-                    <p style="font-size: 0.9rem;">Go to <a href="https://claude.ai" style="color: var(--accent);">claude.ai</a> and sign up for Pro ($20/mo)</p>
-                </div>
-                <div class="card" style="text-align: center;">
-                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">2️⃣</div>
-                    <p style="font-size: 0.9rem;">Create a new Project called "AI Sensei Marketing"</p>
-                </div>
-                <div class="card" style="text-align: center;">
-                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">3️⃣</div>
-                    <p style="font-size: 0.9rem;">Add project knowledge: market report, brand voice, strategy docs</p>
-                </div>
-                <div class="card" style="text-align: center;">
-                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">4️⃣</div>
-                    <p style="font-size: 0.9rem;">Write custom instructions (like CLAUDE.md)</p>
-                </div>
-                <div class="card" style="text-align: center;">
-                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">5️⃣</div>
-                    <p style="font-size: 0.9rem;">Share project access with team members</p>
-                </div>
+            <h2>OpenClaw VPS Setup Overview</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="text-align: left;">Component</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Server</td>
+                            <td>Hetzner CCX23 or similar (~€35/mo)</td>
+                        </tr>
+                        <tr>
+                            <td>Software</td>
+                            <td>OpenClaw (formerly Clawdbot)</td>
+                        </tr>
+                        <tr>
+                            <td>AI Backend</td>
+                            <td>Anthropic API (Claude Opus/Sonnet)</td>
+                        </tr>
+                        <tr>
+                            <td>Channels</td>
+                            <td>Telegram + Email (+ Discord/WhatsApp/Slack optional)</td>
+                        </tr>
+                        <tr>
+                            <td>Email Setup</td>
+                            <td>sensei@aisensei.com (forward to bot, bot sends replies)</td>
+                        </tr>
+                        <tr>
+                            <td>Knowledge Base</td>
+                            <td>Market report, brand voice, Korean copy examples, strategy docs</td>
+                        </tr>
+                        <tr>
+                            <td>System Prompt</td>
+                            <td>Custom instructions for AI Sensei context</td>
+                        </tr>
+                        <tr>
+                            <td>Est. Monthly Cost</td>
+                            <td>~$50-80 (VPS + API, depending on usage)</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
